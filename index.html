@@ -7,6 +7,7 @@
   </head>
   <body>
     <script>
+      // 스타일 시트 생성 및 스타일 적용
       const styleSheet = new CSSStyleSheet();
       styleSheet.replace(`
       *{
@@ -81,16 +82,17 @@
         background-color: #fa709a;
       }
 
-      #item-list-container {
+      #item-list {
         max-height: 250px;
         overflow: scroll;
-        scrollbar-width: none;
-      }
+        overflow-x: hidden;
+      } 
 
-      #item-list-container li {
+      #item-list li {
         position: relative;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         list-style: none;
         height: 3rem;
         margin-bottom: 0.5rem;
@@ -98,22 +100,20 @@
         border-radius: 5px;
       }
 
-      #item-list-container div {
-        width: 100%;
-        display: flex;
-        justify-content:  space-between;
-      }
-
-      #item-list-container input {
+      #item-list input {
         margin: 1rem;
         transition-duration: 0.5s;
         opacity: 1;
       }
 
-      #item-list-container button {
+      #item-list span {
+        width: 100%;
+        text-align: left;
+      }
+
+      #item-list button {
         width: 3rem;
-        margin: 0.3rem 1rem;
-        width: 3rem;
+        height: 2rem;
         border: none;
         color: #fff;
         margin-left: 5px;
@@ -122,22 +122,16 @@
         outline: none;
         background: #f97;
         border-radius: 3px;
-        transition-duration: 0.5s;
-        opacity: 1;
       }
 
       #item-list-container button:hover {
         background-color: #ddd;
       }
-      
-      #item-list-container span {
-        width: 100%;
-        text-align: 'left';
-      }
       `);
-      
+
       document.adoptedStyleSheets = [styleSheet];
 
+      // DOM 요소 생성 함수
       function createElement({
         tagName,
         properties,
@@ -167,6 +161,7 @@
         }
       }
 
+      // DOM 요소 생성
       const app = createElement({
         tagName: "div",
         properties: { id: "app" },
@@ -223,11 +218,20 @@
         ],
       });
 
-      const li = createElement({
-        tagName: "li",
-        children: [
-          {
-            tagName: "div",
+      const addBtn = document.querySelector("#input-field button");
+      const counter = document.getElementById("counter");
+      const input = document.querySelector("#input-field input");
+      const itemList = document.querySelector("#item-list");
+
+
+      // addBtn 클릭 시, li 아이템 추가
+      addBtn.addEventListener("click", () => {
+        if (!input.value) {
+          alert("할 일을 입력해주세요!");
+        } else {
+          const item = createElement({
+            tagName: "li",
+            parent: itemList,
             children: [
               {
                 tagName: "input",
@@ -235,15 +239,48 @@
               },
               {
                 tagName: "span",
-                properties: { innerText: "할일" },
+                properties: { innerText: input.value },
               },
               {
                 tagName: "button",
-                properties: { innerText: "remove" },
+                properties: { innerText: "삭제" },
               },
             ],
-          },
-        ],
+          });
+
+          input.value = null;
+
+          // 토탈 카운터 업데이트
+          counter.children[1].innerText = itemList.children.length;
+
+          // 체크박스 클릭 시 이벤트
+          const [checkbox, text, removeBtn] = item.children;
+
+          checkbox.addEventListener("change", () => {
+            checkbox.checked
+              ? (text.style.textDecoration = "line-through")
+              : text.style.removeProperty("text-decoration");
+
+            // 완료 카운터 업데이트
+            const completeCount = Array.from(itemList.children).filter(
+              (child) => child.firstChild.checked
+            ).length;
+            counter.lastChild.innerText = completeCount;
+          });
+
+          
+
+          // 삭제 버튼 클릭 시 이벤트
+          removeBtn.addEventListener("click", ()=>{
+            item.remove();
+            counter.children[1].innerText = itemList.children.length;
+            const completeCount = Array.from(itemList.children).filter(
+              (child) => child.firstChild.checked
+            ).length;
+            counter.lastChild.innerText = completeCount;
+          })
+
+        }
       });
     </script>
   </body>
