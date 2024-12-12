@@ -6,81 +6,7 @@
     <title>TODO LIST</title>
   </head>
   <body>
-
     <script>
-      createElement({
-        tagName: "div",
-        properties: { id: "app" },
-        parent: document.body,
-        children: [
-          {
-            tagName: "div",
-            properties: { id: "header" },
-            children: [
-              {
-                tagName: "h1",
-                properties: { innerText: "TODO LIST" },
-              },
-              {
-                tagName: "div",
-                properties: { id: "counter" },
-                children: [
-                  { tagName: "span", properties: { innerText: "total : " } },
-                  { tagName: "span", properties: { innerText: 0 } },
-                  {
-                    tagName: "span",
-                    properties: { innerText: "completed : " },
-                  },
-                  { tagName: "span", properties: { innerText: 0 } },
-                ],
-              },
-            ],
-          },
-          {
-            tagName: "div",
-            properties: { id: "input-feild" },
-            children: [
-              { tagName: "input", properties: { placeholder: "할 일을 입력해주세요..." } },
-              { tagName: "button", properties: { innerText: "add" } },
-            ],
-          },
-          {
-            tagName: "div",
-            properties: { id: "item-list-container" },
-            children: [
-              {
-                tagName: "ul",
-                properties: { id : "item-list" },
-                children: [
-                  {
-                    tagName: "li",
-                    children: [
-                      {
-                        tagName: "div",
-                        children: [
-                          {
-                            tagName: "input",
-                            properties: { type: "checkbox" },
-                          },
-                          {
-                            tagName: "span",
-                            properties: { innerText: "할일" },
-                          },
-                          {
-                            tagName: "button",
-                            properties: { innerText: "remove" },
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      });
-
       function createElement({
         tagName,
         properties,
@@ -109,6 +35,85 @@
           return create();
         }
       }
+
+      const app = createElement({
+        tagName: "div",
+        properties: { id: "app" },
+        parent: document.body,
+      });
+
+      const header = createElement({
+        tagName: "div",
+        properties: { id: "header" },
+        parent: app,
+        children: [
+          {
+            tagName: "h1",
+            properties: { innerText: "TODO LIST" },
+          },
+          {
+            tagName: "div",
+            properties: { id: "counter" },
+            children: [
+              { tagName: "span", properties: { innerText: "total : " } },
+              { tagName: "span", properties: { innerText: 0 } },
+              {
+                tagName: "span",
+                properties: { innerText: "completed : " },
+              },
+              { tagName: "span", properties: { innerText: 0 } },
+            ],
+          },
+        ],
+      });
+
+      const inputFeild = createElement({
+        tagName: "div",
+        properties: { id: "input-feild" },
+        parent: app,
+        children: [
+          {
+            tagName: "input",
+            properties: { placeholder: "할 일을 입력해주세요..." },
+          },
+          { tagName: "button", properties: { innerText: "add" } },
+        ],
+      });
+
+      const itemListContainer = createElement({
+        tagName: "div",
+        properties: { id: "item-list-container" },
+        parent: app,
+        children: [
+          {
+            tagName: "ul",
+            properties: { id: "item-list" },
+          },
+        ],
+      });
+
+      const li = createElement({
+        tagName: "li",
+        children: [
+          {
+            tagName: "div",
+            children: [
+              {
+                tagName: "input",
+                properties: { type: "checkbox" },
+              },
+              {
+                tagName: "span",
+                properties: { innerText: "할일" },
+              },
+              {
+                tagName: "button",
+                properties: { innerText: "remove" },
+              },
+            ],
+          },
+        ],
+      });
     </script>
   </body>
 </html>
