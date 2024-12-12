@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO LIST</title>
+  </head>
+  <body>
+
+    <script>
+      createElement({
+        tagName: "div",
+        properties: { id: "app" },
+        parent: document.body,
+        children: [
+          {
+            tagName: "div",
+            properties: { id: "header" },
+            children: [
+              {
+                tagName: "h1",
+                properties: { innerText: "TODO LIST" },
+              },
+              {
+                tagName: "div",
+                properties: { id: "counter" },
+                children: [
+                  { tagName: "span", properties: { innerText: "total : " } },
+                  { tagName: "span", properties: { innerText: 0 } },
+                  {
+                    tagName: "span",
+                    properties: { innerText: "completed : " },
+                  },
+                  { tagName: "span", properties: { innerText: 0 } },
+                ],
+              },
+            ],
+          },
+          {
+            tagName: "div",
+            properties: { id: "input-feild" },
+            children: [
+              { tagName: "input", properties: { placeholder: "할 일을 입력해주세요..." } },
+              { tagName: "button", properties: { innerText: "add" } },
+            ],
+          },
+          {
+            tagName: "div",
+            properties: { id: "item-list-container" },
+            children: [
+              {
+                tagName: "ul",
+                properties: { id : "item-list" },
+                children: [
+                  {
+                    tagName: "li",
+                    children: [
+                      {
+                        tagName: "div",
+                        children: [
+                          {
+                            tagName: "input",
+                            properties: { type: "checkbox" },
+                          },
+                          {
+                            tagName: "span",
+                            properties: { innerText: "할일" },
+                          },
+                          {
+                            tagName: "button",
+                            properties: { innerText: "remove" },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
+
+      function createElement({
+        tagName,
+        properties,
+        parent,
+        children,
+        count = 1,
+      }) {
+        const create = () => {
+          const element = document.createElement(tagName);
+          Object.assign(element, properties);
+          parent?.appendChild(element);
+          children?.map((child) => {
+            child.parent = element;
+            createElement(child);
+          });
+          return element;
+        };
+
+        if (count > 1) {
+          const results = [];
+          for (let i = 0; i < count; i++) {
+            results.push(create());
+          }
+          return results;
+        } else {
+          return create();
+        }
+      }
+    </script>
+  </body>
+</html>
