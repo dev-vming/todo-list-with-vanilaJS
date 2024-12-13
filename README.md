@@ -1,2 +1,2 @@
 # todo-list
-VanilaJS로 todo-list 제작
+VanillaJS로 todo-list 제작
