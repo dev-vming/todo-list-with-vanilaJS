@@ -1,5 +1,5 @@
-# todo-list-with-vanilaJS
-VanilaJS로 todo-list 제작
+# todo-list-with-vanillaJS
+VanillaJS로 todo-list 제작
 
 </br>
 
